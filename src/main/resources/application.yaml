@@ -18,8 +18,8 @@ spring:
           uri: lb://inventory-service
           predicates:
             - Path=/inventory/** #请求转发
-            filters:
-              - StripPrefix=1 #切割请求，去除/order/
+          filters:
+            - StripPrefix=1 #切割请求，去除/order/
         - id: header_route
           uri: http://baidu.com
           predicates:
@@ -29,7 +29,7 @@ spring:
       probability: 1.0
 
   zipkin:
-    base-url: http://zipkin.team-a.cloud.school.thoughtworks.cn
+    base-url: http://zipkin.team-h.cloud.school.thoughtworks.cn
 
 logging:
   level:
