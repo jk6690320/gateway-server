@@ -2,7 +2,7 @@ spring:
   cloud:
     gateway:
       default-filters:
-          - AddResponseHeader=X-Response-HELLO, WORLD
+        - AddResponseHeader=X-Response-HELLO, WORLD
       discovery:
         locator:
           enabled: true
@@ -15,11 +15,16 @@ spring:
           filters:
             - StripPrefix=1 #切割请求，去除/order/
         #TODO: 添加Inventory Service的反向代理
-
+        - id: inventory-service
+          uri: lb://inventory-service
+          predicates:
+            - Path=/inventory/** #请求转发
+            filters:
+              - StripPrefix=1 #切割请求，去除/order/
         - id: header_route
           uri: http://baidu.com
           predicates:
-          - Header=X-Request-Site, baidu
+            - Header=X-Request-Site, baidu
   sleuth:
     sampler:
       probability: 1.0
